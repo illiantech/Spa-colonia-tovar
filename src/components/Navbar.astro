@@ -1,0 +1,82 @@
+---
+import IsSession from "./IsSession.astro";
+import GoBackIcon from "./resources/GoBackIcon.astro";
+---
+
+<header
+  id="header-nav"
+  class="fixed top-0 z-40 flex h-14 w-full justify-center max-lg:transition-opacity lg:h-20"
+>
+  <nav id="navbar" class="flex w-full items-center justify-between lg:w-1/2">
+    <IsSession server:defer>
+      <div
+        slot="fallback"
+        role="status"
+        class="ml-3 max-w-sm animate-pulse items-center lg:flex lg:gap-2"
+      >
+        <div class="aspect-square w-9 rounded-full bg-neutral-700"></div>
+        <div
+          class="hidden h-6 w-28 rounded-md bg-neutral-200 lg:inline-block dark:bg-neutral-700"
+        >
+        </div>
+
+        <span class="sr-only">Loading...</span>
+      </div>
+    </IsSession>
+    <a
+      href="/"
+      title="Volver atras"
+      class="mr-3 flex h-fit w-fit items-center text-sm"
+      ><GoBackIcon fill="currentColor" />
+      <span class="text-shadow-lg">Volver</span></a
+    >
+  </nav>
+</header>
+
+<script>
+  import type { GetElmt } from "../utils/types";
+  import { $ } from "../utils/utilityFunctions";
+
+  export const handleMenu = ($: GetElmt) => {
+    const btn = $("menuBtn");
+    const img = btn?.firstElementChild;
+
+    const text = btn?.lastElementChild;
+    const menu = $("menu");
+
+    const outBtn = (target: HTMLElement) =>
+      target !== btn && target !== img && target !== text;
+
+    btn?.addEventListener("click", () => {
+      if (menu?.classList.contains("hidden")) {
+        menu?.classList.add("transition-display-init", "flex");
+        menu?.classList.remove("hidden", "transition-display-close");
+      } else {
+        menu?.classList.add("hidden", "transition-display-close");
+        menu?.classList.remove("transition-display-init", "flex");
+      }
+    });
+
+    window.addEventListener("click", ({ target }) => {
+      if (
+        menu?.classList.contains("flex") &&
+        target instanceof HTMLElement &&
+        outBtn(target)
+      ) {
+        menu?.classList.add("hidden", "transition-display-close");
+        menu?.classList.remove("transition-display-init", "flex");
+      }
+    });
+  };
+
+  let timeoutHandleMenu: NodeJS.Timeout;
+  // se opta por esta solucion muy poco controlable porque no hay ningun evento que detecte la carga de los server islands
+  // los otros eventos son muy poco consistentes en su respuesta
+  // incluso se intento con MutatioObserver pero tambien tiene un margen de error notable donde no detecta la mutación del elemento
+  document.addEventListener("astro:page-load", () => {
+    clearTimeout(timeoutHandleMenu);
+    timeoutHandleMenu = setTimeout(() => {
+      handleMenu($);
+    }, 2000);
+  });
+</script>

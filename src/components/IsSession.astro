@@ -1,0 +1,101 @@
+---
+import { SignIn, SignOut } from "auth-astro/components";
+import { getSession } from "auth-astro/server";
+import { eq } from "drizzle-orm";
+import { db } from "../db/client";
+import { Users } from "../db/schemas";
+
+import GoogleIcon from "./resources/GoogleIcon.astro";
+
+const session = await getSession(Astro.request);
+
+const { id } = Users;
+
+if (session?.user?.id) {
+  const validatorUser = await db
+    .select({ id })
+    .from(Users)
+    .where(eq(id, session?.user?.id))
+    .limit(1);
+
+  if (!validatorUser[0])
+    await db.insert(Users).values({
+      name: session.user?.name as string,
+      image: session.user?.image as string,
+      email: session.user?.email as string,
+      id: session.user?.id as string
+    });
+}
+---
+
+<>
+  {
+    !session?.user ? (
+      <SignIn
+        title="inicia tu sesión"
+        class="ml-3 h-fit w-fit items-center rounded-md transition-transform hover:scale-110 hover:text-white lg:flex lg:gap-2"
+        provider="google"
+      >
+        <GoogleIcon size={36} />
+        <div class="text-shadow-lg hidden lg:inline-block">Iniciar sesión</div>
+      </SignIn>
+    ) : (
+      <div class="relative">
+        <button
+          id="menuBtn"
+          title="Abrir menú"
+          class="ml-3 items-center transition-transform hover:scale-110 hover:text-white lg:flex lg:gap-2"
+        >
+          <img
+            class="aspect-square w-9 rounded-full"
+            src={session.user.image}
+            alt="Avatar"
+          />
+
+          <div class="text-shadow-lg hidden w-48 text-left text-sm lg:flex">
+            {session.user.name}
+          </div>
+        </button>
+
+        <div
+          id="menu"
+          class="transition-display-close absolute left-8 hidden w-28 flex-col items-center gap-2 rounded-md border border-neutral-700 bg-neutral-900 lg:left-10 lg:top-11 lg:gap-3 lg:py-3"
+        >
+          <div class="w-full border-b border-neutral-700 py-2 text-center text-sm lg:hidden">
+            {session.user.name}
+          </div>
+          <SignOut
+            title="cierra tu sesión"
+            class="text-xs transition-opacity hover:opacity-80 lg:text-sm"
+          >
+            Cerrrar session
+          </SignOut>
+          <SignIn
+            title="cambia tu sesión"
+            class="mb-2 text-xs transition-opacity hover:opacity-80 lg:mb-0 lg:text-sm"
+            provider="google"
+          >
+            Cambiar cuenta
+          </SignIn>
+        </div>
+      </div>
+    )
+  }
+</>
+<script>
+  import type { Session } from "@auth/core/types";
+  import { ROOT } from "astro:env/client";
+  import { sessionStore } from "../store/session";
+  import { RoutesAPI } from "../utils/enums";
+
+  const RES = await fetch(`${ROOT}${RoutesAPI.SESSION}`);
+
+  const session = (await RES.json()) as Session | null;
+
+  if (session?.user)
+    sessionStore.set({
+      name: session.user.name,
+      email: session.user.email,
+      image: session.user.image
+    });
+</script>

@@ -1,0 +1,46 @@
+{
+  "name": "spa_colonia_tovar",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.9.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint --fix \"src/**/*.{js,ts,jsx,tsx,astro}\"",
+    "format": "prettier --write  \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\"",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@astrojs/check": "0.9.4",
+    "@astrojs/preact": "4.0.11",
+    "@astrojs/vercel": "8.1.4",
+    "@auth/core": "0.37.4",
+    "@nanostores/preact": "^1.0.0",
+    "@preact/signals": "^2.0.4",
+    "@tailwindcss/vite": "4.1.5",
+    "astro": "^5.7.12",
+    "auth-astro": "4.2.0",
+    "blaze-slider": "1.9.3",
+    "motion": "^12.12.1",
+    "nanostores": "^1.0.1",
+    "preact": "10.26.6",
+    "preact-compat": "^3.19.0",
+    "tailwindcss": "4.1.5"
+  },
+  "devDependencies": {
+    "@libsql/client": "0.10.0",
+    "@types/dom-view-transitions": "1.0.5",
+    "drizzle-kit": "0.24.2",
+    "drizzle-orm": "0.33.0",
+    "prettier": "3.3.3",
+    "prettier-plugin-astro": "0.14.1",
+    "prettier-plugin-tailwindcss": "0.6.6",
+    "tsx": "4.19.4",
+    "typescript": "5.5.4"
+  }
+}

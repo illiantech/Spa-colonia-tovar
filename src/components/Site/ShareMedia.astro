@@ -1,0 +1,92 @@
+---
+import ShareIcon from "../resources/ShareIcon.astro";
+
+import { CLOSE_MODAL } from "@/utils/const";
+import FacebookIcon from "../resources/FacebookIcon.astro";
+import LinkedinIcon from "../resources/LinkedinIcon.astro";
+
+import { ROOT } from "astro:env/client";
+import WhatsappIcon from "../resources/WhatsappIcon.astro";
+import XIcon from "../resources/XIcon.astro";
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+
+const HREF = `${ROOT}/${id}`;
+
+const formattedHref = encodeURIComponent(HREF);
+
+const LINKS_MEDIA = [
+  {
+    url: `https://www.facebook.com/sharer/sharer.php?u=${formattedHref}`,
+    name: "Facebook",
+    component: FacebookIcon
+  },
+  {
+    url: `https://x.com/intent/tweet?url=${formattedHref}`,
+    name: "X",
+    component: XIcon
+  },
+  {
+    url: `https://api.whatsapp.com/send?text=${formattedHref}`,
+    name: "Whatsapp",
+    component: WhatsappIcon
+  },
+  {
+    url: `https://www.linkedin.com/sharing/share-offsite/?url=${formattedHref}`,
+    name: "Linkedin",
+    component: LinkedinIcon
+  }
+];
+---
+
+<button
+  id="shareOpen"
+  class="max-lg:animate-fade-in lg:bottom-22 bottom-19 absolute right-2 z-10 grid aspect-square w-7 place-items-center max-lg:transition-opacity lg:-right-[calc(60%_-_1rem)] lg:z-50"
+  title="Compartir"
+>
+  <ShareIcon />
+</button>
+<dialog
+  data-close={CLOSE_MODAL}
+  class="backdrop:bg-black-opac-3 m-auto w-4/5 max-w-[500px] rounded-md bg-neutral-900 text-current"
+  id="shareModal"
+>
+  <div class="relative flex h-48 w-full flex-col justify-evenly lg:h-60">
+    <div class="flex justify-evenly">
+      {
+        LINKS_MEDIA.map((link) => {
+          return (
+            <a
+              target="_blank"
+              class="flex w-fit flex-col items-center gap-1 transition-transform hover:scale-110"
+              href={link.url}
+            >
+              <link.component clase="aspect-square w-8 lg:w-12" />
+              <span class="text-xss w-fit lg:text-xs">{link.name}</span>
+            </a>
+          );
+        })
+      }
+    </div>
+    <div class="flex w-full justify-evenly">
+      <input
+        id="shareText"
+        value={HREF}
+        readonly
+        class="w-4/6 overflow-x-scroll text-xs lg:w-3/4 lg:text-sm"
+      />
+      <button
+        id="btnCopyShare"
+        class="bg-csr text-cpr h-fit rounded-sm px-2 pb-1 pt-0.5 text-xs transition-opacity hover:opacity-80 lg:text-sm"
+        >Copiar</button
+      >
+    </div>
+    <button
+      class="absolute right-0 top-0 h-6 w-6 scale-75 before:absolute before:left-0 before:top-3 before:h-[3px] before:w-6 before:rotate-45 before:rounded-md before:bg-white before:transition-all before:content-[''] after:absolute after:left-0 after:top-3 after:h-[3px] after:w-6 after:-rotate-45 after:rounded-md after:bg-white after:transition-all after:content-[''] hover:before:bg-neutral-300 hover:after:bg-neutral-300"
+      data-close={CLOSE_MODAL}></button>
+  </div>
+</dialog>

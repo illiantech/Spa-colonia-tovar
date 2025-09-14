@@ -1,0 +1,194 @@
+---
+import { SliderSite } from "../components/Site/SliderSite";
+import { AsideSite } from "../components/Site";
+
+import ShareMedia from "../components/Site/ShareMedia.astro";
+import Layout from "../layouts/Layout.astro";
+import { ROOT } from "astro:env/client";
+import { RoutesAPI } from "../utils/enums";
+import type { TourismSite } from "../utils/types";
+import Description from "../components/Site/Description.astro";
+import { SiteLike } from "../components/Site/SiteLike";
+
+export const prerender = true;
+
+export const getStaticPaths = async () => {
+  const RES = await fetch(`${ROOT}${RoutesAPI.SITE}`);
+
+  const SITES = (await RES.json()) as TourismSite[];
+
+  return SITES.map((site) => {
+    return {
+      params: { id: site.id },
+      props: { site }
+    };
+  });
+};
+
+const { id } = Astro.params;
+
+const { site } = Astro.props;
+
+const { title, images } = site;
+---
+
+<Layout title={title}>
+  <section
+    class="lg:bg-black-opac-3 h-[100vh] w-full bg-neutral-950 lg:relative lg:flex lg:items-center lg:justify-center"
+  >
+    <div
+      class="lg:w-4xl 2xl:w-5xl 3xl:w-8xl flex w-full flex-col-reverse lg:grid lg:grid-cols-[2fr_1.2fr]"
+    >
+      <AsideSite client:only="preact" id={id}>
+        <Description title={title} />
+      </AsideSite>
+
+      <div class="relative lg:col-start-1">
+        <div transition:name={`transition-${id}`} class="blaze-slider">
+          <SliderSite client:load images={images} />
+        </div>
+
+        <ShareMedia id={id} />
+        <SiteLike id={id} client:load />
+      </div>
+
+      <!-- <div
+      class={`absolute left-0 flex w-full justify-center transition-all lg:w-auto ${deleteMessageStore.value ? "top-6 opacity-100 lg:top-[102%]" : "top-0 opacity-0 lg:top-[110%]"}`}
+    >
+      <div
+        class="rounded-md bg-neutral-100 p-2.5 text-xs font-bold opacity-100 shadow-md"
+      >
+        El comentario fue eliminado
+      </div>
+    </div> -->
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { isDisbaleItemSlider } from "../store/disbaleItemSlider";
+  import type { GetElmt } from "../utils/types";
+  import { $ } from "../utils/utilityFunctions";
+
+  let timeoutHandle: NodeJS.Timeout;
+
+  document.addEventListener("astro:page-load", () => {
+    const headerNav = $("header-nav");
+    const ShareOpen = $("shareOpen");
+
+    const handleSeeMore = ($: GetElmt) => {
+      const btn = $("seeMoreBtn");
+      const seeMore = $("seeMore");
+
+      const HIDDEN = "Ver mas";
+      const VISIBLE = "Ver menos";
+
+      btn?.addEventListener("click", () => {
+        const toggleBtn = btn.textContent?.trim();
+
+        if (toggleBtn === VISIBLE) {
+          btn.textContent = HIDDEN;
+          seeMore?.classList.add(
+            "h-[1lh]",
+            "overflow-hidden",
+            "text-ellipsis",
+            "whitespace-nowrap"
+          );
+          seeMore?.classList.remove(
+            "h-auto",
+            "overflow-visible",
+            "whitespace-normal"
+          );
+        }
+
+        if (toggleBtn === HIDDEN) {
+          btn.textContent = VISIBLE;
+          seeMore?.classList.add(
+            "h-auto",
+            "overflow-visible",
+            "whitespace-normal"
+          );
+          seeMore?.classList.remove(
+            "h-[1lh]",
+            "overflow-hidden",
+            "text-ellipsis",
+            "whitespace-nowrap"
+          );
+        }
+      });
+    };
+    const handleShareMedia = ($: GetElmt) => {
+      const Modal = $("shareModal") as HTMLDialogElement;
+
+      ShareOpen?.addEventListener("click", () => {
+        Modal.showModal();
+      });
+
+      Modal?.addEventListener("click", ({ target }) => {
+        if (target instanceof HTMLElement && target.dataset.close)
+          Modal.close();
+      });
+    };
+
+    const handleCopytextShare = ($: GetElmt) => {
+      const shareText = $("shareText");
+
+      const btnCopyShare = $("btnCopyShare");
+
+      const copyShareText = async () => {
+        if (!(shareText instanceof HTMLInputElement)) return;
+
+        try {
+          await navigator.clipboard.writeText(shareText.value);
+          console.log("Contenido copiado al portapapeles");
+        } catch (err) {
+          console.error("Error to copy: ", err);
+        }
+      };
+
+      btnCopyShare?.addEventListener("click", copyShareText);
+    };
+
+    clearTimeout(timeoutHandle);
+    timeoutHandle = setTimeout(() => {
+      handleSeeMore($);
+    }, 1000);
+
+    handleShareMedia($);
+    handleCopytextShare($);
+    isDisbaleItemSlider.subscribe((value) => {
+      headerNav?.classList.toggle("max-lg:opacity-0", value);
+      ShareOpen?.classList.toggle("max-lg:opacity-0", value);
+    });
+  });
+</script>
+
+<style is:inline>
+  :root {
+    scroll-behavior: smooth;
+  }
+
+  @media (min-width: 1024px) {
+    #header-nav {
+      box-shadow:
+        0px 5px 50px -5px hsla(0, 0%, 100%, 0.1),
+        0px 0px 0px 1px hsla(0, 0%, 100%, 0.1);
+      background-color: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      padding-right: 16px;
+    }
+  }
+
+  dialog[open] {
+    top: 0px;
+    opacity: 1;
+    transition:
+      opacity 0.3s ease-in-out,
+      top 0.3s ease-in-out;
+
+    @starting-style {
+      top: 100px;
+      opacity: 0;
+    }
+  }
+</style>

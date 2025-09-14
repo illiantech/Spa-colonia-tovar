@@ -1,0 +1,94 @@
+@source "../node_modules/@my-company/ui-lib";
+@import "tailwindcss";
+@reference "tailwindcss";
+
+@theme {
+  --color-cpr: hsl(0, 0%, 15%);
+  --color-csr: hsl(0, 0%, 95%);
+  --color-terracotta-soft: hsl(6, 94%, 24%);
+  --color-terracotta: hsl(8, 90%, 40%);
+  --color-black-opac-1: hsla(0, 0%, 0%, 0.7);
+  --color-black-opac-2: hsla(0, 0%, 0%, 0.6);
+  --color-black-opac-3: hsla(0, 0%, 0%, 0.5);
+  --color-black-opac-4: hsla(0, 0%, 0%, 0.4);
+  --color-black-opac-5: hsla(0, 0%, 0%, 0.3);
+  --color-black-opac-6: hsla(0, 0%, 0%, 0.2);
+  --shadow-down: 0 1.5px 1px 1px rgba(0, 0, 0, 1);
+  --spacing-18: 4.5rem;
+  --spacing-17: 4.25rem;
+  --spacing-19: 4.75rem;
+  --spacing-21: 5.25rem;
+  --spacing-22: 5.5rem;
+  --spacing-4\.5xl: 960px;
+  --spacing-8xl: 1400px;
+  --breakpoint-3xl: 130rem;
+  --text-xss: 10px;
+  --animate-fade-in: fade-in 1s ease;
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  button,
+  a {
+    cursor: pointer;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+@utility visibility-auto {
+  content-visibility: auto;
+}
+
+@utility interpolate-transition {
+  interpolate-size: allow-keywords;
+  transition: 0.5s ease;
+  transition-property: height, width;
+}
+
+@utility transition-display-init {
+  opacity: 1;
+  transform: translateY(0px);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+
+  @starting-style {
+    opacity: 0;
+
+    transform: translateY(-5px);
+  }
+}
+
+@utility transition-display-close {
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    display 0.15s ease allow-discrete;
+  opacity: 0;
+  transform: translateY(-5px);
+}
+
+@utility bright-shadow {
+  box-shadow:
+    0px 5px 60px -20px hsla(0, 0%, 100%, 0.1),
+    0px 0px 0px 0px hsla(0, 0%, 100%, 0.1);
+}

@@ -1,0 +1,137 @@
+[
+    {
+        "images": [
+            {
+                "src": "/example1.webp",
+                "alt": "example1",
+                "id": "dfdfdfd-fdfdfdf-dfdfdfd-erwerew"
+            },
+            {
+                "src": "/example.webp",
+                "alt": "example",
+                "id": "434343-fdfdfdf-dfdfdfd-erwerew"
+            }
+        ],
+        "links": [
+            "http://a-1"
+        ],
+        "title": "iglesia",
+        "category": "inn",
+        "categoryId": "624c955406208680624b70ecf3941f4d7477c338ef91dc0246c5a0947cbd6b61",
+        "description": "lorem punto",
+        "id": "3278381972391254545454545",
+        "tlf": "23232323",
+        "openingHours": "Lunes a Viernes 9:00 AM - 5:00 PM",
+        "location": "en la plaza"
+    },
+    {
+        "images": [
+            {
+                "src": "/example1.webp",
+                "alt": "example1",
+                "id": "dfdfdfd-fdfdfdf-dfdfdfd-erwerew"
+            }
+        ],
+        "links": [
+            "http://a-1"
+        ],
+        "title": "iglesia",
+        "category": "place",
+        "categoryId": "624c955406208680624b70ecf3941f4d7477c338ef91dc0246c5a0947cbd6b61",
+        "description": "lorem punto",
+        "id": "327838197239128731293871",
+        "tlf": "23232323",
+        "openingHours": "Lunes a Viernes 9:00 AM - 5:00 PM",
+        "location": "en la plaza"
+    },
+    {
+        "images": [
+            {
+                "src": "/example1.webp",
+                "alt": "example1",
+                "id": "dfdfdfd-fdfdfdf-dfdfdfd-erwerew"
+            },
+            {
+                "src": "/example.webp",
+                "alt": "example",
+                "id": "434343-fdfdfdf-dfdfdfd-erwerew"
+            }
+        ],
+        "links": [
+            "http://a-1"
+        ],
+        "title": "iglesia",
+        "category": "restaurant",
+        "categoryId": "624c955406208680624b70ecf3941f4d7477c338ef91dc0246c5a0947cbd6b61",
+        "description": "lorem punto",
+        "id": "3278381972391254545454545",
+        "tlf": "23232323",
+        "openingHours": "Lunes a Viernes 9:00 AM - 5:00 PM",
+        "location": "en la plaza"
+    },
+    {
+        "images": [
+            {
+                "src": "/example1.webp",
+                "alt": "example1",
+                "id": "dfdfdfd-fdfdfdf-dfdfdfd-erwerew"
+            }
+        ],
+        "links": [
+            "http://a-1"
+        ],
+        "title": "iglesia",
+        "category": "restaurant",
+        "categoryId": "624c955406208680624b70ecf3941f4d7477c338ef91dc0246c5a0947cbd6b61",
+        "description": "lorem punto",
+        "id": "327838197239128731293871",
+        "tlf": "23232323",
+        "openingHours": "Lunes a Viernes 9:00 AM - 5:00 PM",
+        "location": "en la plaza"
+    },
+    {
+        "images": [
+            {
+                "src": "/example1.webp",
+                "alt": "example1",
+                "id": "dfdfdfd-fdfdfdf-dfdfdfd-erwerew"
+            },
+            {
+                "src": "/example.webp",
+                "alt": "example",
+                "id": "434343-fdfdfdf-dfdfdfd-erwerew"
+            }
+        ],
+        "links": [
+            "http://a-1"
+        ],
+        "title": "iglesia",
+        "category": "activities",
+        "categoryId": "624c955406208680624b70ecf3941f4d7477c338ef91dc0246c5a0947cbd6b61",
+        "description": "lorem punto",
+        "id": "3278381972391254545454545",
+        "tlf": "23232323",
+        "openingHours": "Lunes a Viernes 9:00 AM - 5:00 PM",
+        "location": "en la plaza"
+    },
+    {
+        "images": [
+            {
+                "src": "/example1.webp",
+                "alt": "example1",
+                "id": "dfdfdfd-fdfdfdf-dfdfdfd-erwerew"
+            }
+        ],
+        "links": [
+            "http://a-1"
+        ],
+        "title": "iglesia",
+        "category": "activities",
+        "categoryId": "624c955406208680624b70ecf3941f4d7477c338ef91dc0246c5a0947cbd6b61",
+        "description": "lorem punto",
+        "id": "327838197239128731293871",
+        "tlf": "23232323",
+        "openingHours": "Lunes a Viernes 9:00 AM - 5:00 PM",
+        "location": "en la plaza"
+    }
+]

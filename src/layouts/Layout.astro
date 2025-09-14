@@ -1,0 +1,170 @@
+---
+import { ClientRouter } from "astro:transitions";
+
+import Navbar from "../components/Navbar.astro";
+import "../styles/global.css";
+// revisar porque tecicamente no es una page
+export const prerender = true;
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <ClientRouter />
+  </head><body>
+    {title !== "404" && title !== "500" && <Navbar />}
+
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  *::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+
+  *::-webkit-scrollbar:vertical {
+    width: 1rem;
+  }
+
+  *::-webkit-scrollbar-button:increment {
+    display: none;
+  }
+
+  *::-webkit-scrollbar:horizontal {
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-thumb,
+  p::-webkit-scrollbar-thumb,
+  textarea::-webkit-scrollbar-thumb {
+    background-color: var(--csr);
+    border-radius: 10px;
+    border: 6px solid var(--cpr);
+  }
+
+  div::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  div::-webkit-scrollbar:vertical {
+    width: 0;
+  }
+
+  p::-webkit-scrollbar-thumb,
+  textarea::-webkit-scrollbar-thumb {
+    border-color: hsl(224, 71%, 4%);
+  }
+
+  *::-webkit-scrollbar-track {
+    border-radius: 5px;
+  }
+
+  :root {
+    --cpr: hsl(0, 0%, 15%);
+    --csr: hsl(0, 0%, 95%);
+    --angle: 90deg;
+    --terrecotta-soft: hsl(8, 100%, 5%);
+    --terracotta: #c24616;
+    background-color: #0a0a0a;
+    color: var(--csr);
+  }
+
+  @property --angle {
+    syntax: "<angle>";
+    initial-value: 90deg;
+    inherits: true;
+  }
+
+  .figure-border {
+    -moz-border-image: conic-gradient(
+        from var(--angle),
+        var(--terrecotta-soft),
+        var(--terracotta) 0.4turn,
+        var(--terracotta) 0.4turn,
+        var(--terrecotta-soft) 0.6turn
+      )
+      30;
+    border-image: conic-gradient(
+        from var(--angle),
+        var(--terrecotta-soft),
+        var(--terracotta) 0.4turn,
+        var(--terracotta) 0.4turn,
+        var(--terrecotta-soft) 0.6turn
+      )
+      30;
+
+    -moz-animation: border-rotate 20s linear infinite;
+    animation: border-rotate 20s linear infinite;
+  }
+
+  @keyframes border-rotate {
+    to {
+      --angle: 450deg;
+    }
+  }
+
+  .like {
+    color: transparent;
+
+    stroke-width: 2px;
+    stroke: #fff;
+  }
+
+  .like__active {
+    color: #fff;
+    stroke-width: 0px;
+    animation: moveLike 0.4s ease;
+  }
+
+  @keyframes moveLike {
+    40% {
+      transform: rotate(-25deg);
+      color: var(--terracotta);
+    }
+
+    100% {
+      transform: rotate(0deg);
+      color: #fff;
+    }
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  #header-nav {
+    animation: blur linear both;
+    animation-timeline: scroll();
+    animation-range: 0 500px;
+  }
+
+  @keyframes blur {
+    to {
+      box-shadow:
+        0px 5px 50px -5px hsla(0, 0%, 100%, 0.1),
+        0px 0px 0px 1px hsla(0, 0%, 100%, 0.1);
+      background-color: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+    }
+  }
+</style>

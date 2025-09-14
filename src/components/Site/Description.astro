@@ -1,0 +1,29 @@
+---
+import type { Link } from "@/utils/types";
+
+interface Props {
+  title: string;
+  location?: string;
+  description?: string;
+  tlf?: string;
+  openingHours?: string;
+  links?: Link[];
+}
+
+const { title, description } = Astro.props;
+---
+
+<article class="flex flex-col p-4 text-base">
+  <h2 class="mb-3 mt-2 w-full text-lg font-bold">{title}</h2>
+
+  <p
+    id="seeMore"
+    class="h-[1lh] overflow-hidden text-ellipsis whitespace-nowrap"
+  >
+    {description}
+    <a class="inline-block" href=""> youtube </a>
+  </p>
+  <button id="seeMoreBtn" class="none w-fit text-xs opacity-60 hover:underline">
+    Ver mas
+  </button>
+</article>

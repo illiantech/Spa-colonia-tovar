@@ -1,0 +1,98 @@
+---
+import { ROOT } from "astro:env/client";
+import { SitesByCategory } from "../components/SitesByCategory";
+import { SliderCategory } from "../components/SliderCategory";
+import Layout from "../layouts/Layout.astro";
+import { RoutesAPI } from "../utils/enums";
+
+import { WrapperViewStats } from "../components/WrapperViewStats";
+import type { CategoryPayload } from "../schemas/category";
+import type { CategoryData } from "../utils/types";
+
+export const prerender = true;
+
+const RES_CATEGORYS = await fetch(`${ROOT}${RoutesAPI.CATEGORY}`);
+
+const CATEGORYS = (await RES_CATEGORYS.json()) as CategoryPayload;
+
+// const RES_SITES = await fetch(`${ROOT}${RoutesAPI.SITE}`);
+
+import SITES from "../utils/sites.json";
+
+// const SITES = (await RES_SITES.json()) as TourismSite[];
+
+const SITES_ID = SITES.map((sites) => ({
+  id: sites.id,
+  category: sites.categoryId
+}));
+
+const categorysData: CategoryData[] = CATEGORYS.map((item) => ({
+  title: item.category,
+  id: item.id,
+  src: `example.webp`
+}));
+
+// ///////////////////////////////////////////////////////////
+
+// const seed = await postSeedSites("" as unknown as APIContext);
+
+// const seedRes = await seed.json();
+
+// console.log(seedRes);
+---
+
+<Layout title="Welcome to Astro.">
+  <div class="flex flex-col items-center gap-8">
+    <h1>SPA COLONIA TOVAR</h1>
+
+    <section
+      class="mb-[1500px] flex w-full flex-col items-center justify-center"
+    >
+      <div class="w-5/6 max-w-6xl lg:mb-10">
+        <SliderCategory client:visible categorys={categorysData} />
+      </div>
+
+      <div
+        class="bright-shadow relative max-h-[75vh] w-full overflow-y-auto lg:max-h-screen lg:w-3/4 lg:max-w-3xl"
+      >
+        <SitesByCategory client:visible>
+          {
+            SITES.map(
+              ({ id, images, title, categoryId, description }, index) => (
+                <a
+                  href={id}
+                  title={title}
+                  data-category-site={categoryId}
+                  class={`flex h-28 w-full gap-3 overflow-hidden border-neutral-700 ${index !== SITES.length - 1 ? "border-b" : "border-b-0"} bg-neutral-950 opacity-0 transition-opacity lg:h-48`}
+                >
+                  <div
+                    transition:name={`transition-${id}`}
+                    title="click para mas contenido"
+                    class="figure-border relative aspect-square h-full cursor-pointer border-[1px] transition-opacity after:absolute after:top-0 after:aspect-square after:w-full after:bg-black after:opacity-20 after:transition-opacity after:content-[''] lg:after:hover:opacity-0"
+                  >
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      class="h-full w-full object-cover object-center"
+                      {...images[0]}
+                    />
+                  </div>
+                  <article class="flex w-full flex-col gap-2.5 lg:gap-4">
+                    <h3 class="mt-2.5 w-3/5 text-xs font-bold lg:mt-4 lg:text-lg">
+                      {title}
+                    </h3>
+                    <p class="text-xss h-[1lh] w-3/5 overflow-hidden text-ellipsis whitespace-nowrap lg:w-[70%] lg:text-base">
+                      {description}
+                    </p>
+                  </article>
+                </a>
+              )
+            )
+          }
+        </SitesByCategory>
+
+        <WrapperViewStats client:visible SITES_ID={SITES_ID} />
+      </div>
+    </section>
+  </div>
+</Layout>

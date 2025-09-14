@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Layout.astro";
+export const prerender = true;
+---
+
+<Layout title="500">
+  <section class="flex h-full items-center text-gray-50">
+    <div
+      class="container mx-auto my-8 flex flex-col items-center justify-center px-5"
+    >
+      <div
+        class="flex max-w-md flex-col gap-4 text-center lg:max-w-4xl lg:items-center lg:gap-14"
+      >
+        <h2 class="mb-8 text-6xl font-extrabold text-white lg:text-9xl">
+          <span>Error</span>
+          <span class="bg-terracotta box-content rounded px-2">500</span>
+        </h2>
+        <p class="text-lg font-semibold md:text-3xl lg:text-4xl">
+          Lo sentimos, ocurrió un problema en el servidor. Estamos trabajando
+          para solucionarlo.
+        </p>
+
+        <a
+          rel="noopener noreferrer"
+          href="/"
+          class="bg-terracotta-soft rounded px-8 py-3 font-semibold text-gray-50"
+          >Volver a la página de inicio</a
+        >
+      </div>
+    </div>
+  </section>
+</Layout>

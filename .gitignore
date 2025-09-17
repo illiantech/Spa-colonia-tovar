@@ -30,3 +30,6 @@ dist/
 migrations/
 
 .vscode/
+.vercel
+
+pnpm-lock.yaml

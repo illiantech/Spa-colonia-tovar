@@ -7,7 +7,7 @@ import { RoutesAPI } from "../utils/enums";
 
 import { WrapperViewStats } from "../components/WrapperViewStats";
 import type { CategoryPayload } from "../schemas/category";
-import type { CategoryData } from "../utils/types";
+import type { CategoryData, TourismSite } from "../utils/types";
 
 export const prerender = true;
 
@@ -15,11 +15,11 @@ const RES_CATEGORYS = await fetch(`${ROOT}${RoutesAPI.CATEGORY}`);
 
 const CATEGORYS = (await RES_CATEGORYS.json()) as CategoryPayload;
 
-// const RES_SITES = await fetch(`${ROOT}${RoutesAPI.SITE}`);
+const RES_SITES = await fetch(`${ROOT}${RoutesAPI.SITE}`);
 
-import SITES from "../utils/sites.json";
+// import SITES from "../utils/sites.json";
 
-// const SITES = (await RES_SITES.json()) as TourismSite[];
+const SITES = (await RES_SITES.json()) as TourismSite[];
 
 const SITES_ID = SITES.map((sites) => ({
   id: sites.id,

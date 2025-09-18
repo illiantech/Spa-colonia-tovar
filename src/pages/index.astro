@@ -1,25 +1,20 @@
 ---
-import { ROOT } from "astro:env/client";
 import { SitesByCategory } from "../components/SitesByCategory";
 import { SliderCategory } from "../components/SliderCategory";
 import Layout from "../layouts/Layout.astro";
-import { RoutesAPI } from "../utils/enums";
 
+import { findCategorys } from "@/services/category";
+import { findSites } from "@/services/site";
 import { WrapperViewStats } from "../components/WrapperViewStats";
-import type { CategoryPayload } from "../schemas/category";
-import type { CategoryData, TourismSite } from "../utils/types";
+import type { CategoryData } from "../utils/types";
 
 export const prerender = true;
 
-const RES_CATEGORYS = await fetch(`${ROOT}${RoutesAPI.CATEGORY}`);
+const CATEGORYS = await findCategorys();
 
-const CATEGORYS = (await RES_CATEGORYS.json()) as CategoryPayload;
-
-const RES_SITES = await fetch(`${ROOT}${RoutesAPI.SITE}`);
+const SITES = await findSites();
 
 // import SITES from "../utils/sites.json";
-
-const SITES = (await RES_SITES.json()) as TourismSite[];
 
 const SITES_ID = SITES.map((sites) => ({
   id: sites.id,

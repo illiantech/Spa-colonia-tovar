@@ -4,18 +4,15 @@ import { AsideSite } from "../components/Site";
 
 import ShareMedia from "../components/Site/ShareMedia.astro";
 import Layout from "../layouts/Layout.astro";
-import { ROOT } from "astro:env/client";
-import { RoutesAPI } from "../utils/enums";
-import type { TourismSite } from "../utils/types";
+
 import Description from "../components/Site/Description.astro";
 import { SiteLike } from "../components/Site/SiteLike";
+import { findSites } from "@/services/site";
 
 export const prerender = true;
 
 export const getStaticPaths = async () => {
-  const RES = await fetch(`${ROOT}${RoutesAPI.SITE}`);
-
-  const SITES = (await RES.json()) as TourismSite[];
+  const SITES = await findSites();
 
   return SITES.map((site) => {
     return {

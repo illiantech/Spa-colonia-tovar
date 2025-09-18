@@ -75,7 +75,7 @@ export const WrapperViewStats = ({ SITES_ID }: Props) => {
           ? { ...initial, top: `${112 * (index + 1) - 28}px` }
           : { ...initial, top: `${192 * (index + 1) - 34}px` };
     },
-    [refIsMobile.current]
+    [refIsMobile.current] // Modifier state media query event
   );
 
   return (

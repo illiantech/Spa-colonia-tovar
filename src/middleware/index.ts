@@ -26,6 +26,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
 
   const ORIGIN = context.request.headers.get(ORIGIN_HEADERS);
+  // console.log("ORIGIN", context.request.headers);
 
   if (!ORIGIN || ALLOWED_ORIGINS.includes(ORIGIN)) {
     context.request.headers.set(
@@ -56,17 +57,16 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   const session = await getSession(context.request);
 
+  context.locals.userId = session?.user?.id;
+
   if (
     (url.pathname.startsWith(RoutesAPI.LIKE) ||
       url.pathname.startsWith(RoutesAPI.COMMENT) ||
       url.pathname.startsWith(RoutesAPI.SITE) ||
       url.pathname.startsWith(RoutesAPI.CATEGORY)) &&
     context.request.method === Methods.GET
-  ) {
-    context.locals.userId = session?.user?.id;
-
+  )
     return next();
-  }
 
   if (!session || session.user == null)
     return res(
@@ -75,8 +75,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
         status: 401
       }
     );
-
-  context.locals.userId = session.user.id;
 
   return next();
 });

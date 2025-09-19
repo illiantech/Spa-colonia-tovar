@@ -34,7 +34,7 @@ export const useLike = ({ id }: { id: string }) => {
   useEffect(() => {
     const controller = new AbortController();
     const { signal } = controller;
-    console.log("useLike");
+
     fetch(`${RoutesAPI.LIKE}?id=${id}`, {
       method: Methods.GET,
       signal

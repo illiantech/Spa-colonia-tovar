@@ -16,15 +16,17 @@ export const enum CategorysEnum {
 export const enum KeysAccessControl {
   ALLOW_ORIGIN = "Access-Control-Allow-Origin",
   ALLOW_METHODS = "Access-Control-Allow-Methods",
+  ALLOW_AGE = "Access-Control-Max-Age",
   ALLOW_HEADERS = "Access-Control-Allow-Headers",
-  ALLOWED_CREDENTIALS = "Access-Control-Allow-Credentials",
+  ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials",
   VARY = "Vary"
 }
 
 export const enum ValuesAccessControl {
   ALLOW_METHODS = "GET, POST, PUT, DELETE, OPTIONS, PATCH",
   ALLOW_HEADERS = "Content-Type, Authorization",
-  ALLOWED_CREDENTIALS = "true",
+  ALLOW_AGE = "86400",
+  ALLOW_CREDENTIALS = "true",
   VARY = "Origin"
 }
 
@@ -39,7 +41,6 @@ export const enum RoutesAPI {
   API = "/api",
   COMMENT = "/api/comment",
   LIKE = "/api/like",
-  VIEW = "/api/view",
   AUTH = "/api/auth",
   SITE = "/api/site",
   CATEGORY = "/api/category",
@@ -53,4 +54,10 @@ export const enum EnvFields {
   DATABASE_TOKEN = "DATABASE_TOKEN",
   GOOGLE_CLIENT_ID = "GOOGLE_CLIENT_ID",
   GOOGLE_CLIENT_SECRET = "GOOGLE_CLIENT_SECRET"
+}
+
+export const enum AlternativeDataSession {
+  NAME = "Usuario Anónimo",
+  EMAIL = "No proporcionado",
+  IMAGE = "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
 }

@@ -1,18 +1,22 @@
 import { schemaSession, type SessionState } from "@/schemas/session";
+import { AlternativeDataSession } from "@/utils/enums";
 import { res } from "@/utils/utilityFunctions";
 import type { APIRoute } from "astro";
-import { getSession } from "auth-astro/server";
 
-export const GET: APIRoute = async ({ request }) => {
-  const session = await getSession(request);
+export const GET: APIRoute = async ({ request, locals }) => {
+  let userParser: SessionState;
 
-  const USER_PARSER: SessionState = {
-    name: session?.user?.name,
-    image: session?.user?.image,
-    email: session?.user?.email
-  };
+  if (!locals.user) userParser = null;
+  else {
+    const { email, image, name } = locals.user;
 
-  const validation = schemaSession.safeParse(USER_PARSER);
+    userParser = {
+      name: name ?? AlternativeDataSession.NAME,
+      image: image ?? AlternativeDataSession.IMAGE,
+      email: email ?? AlternativeDataSession.EMAIL
+    };
+  }
+  const validation = schemaSession.safeParse(userParser);
 
   if (!validation.success) {
     return res(

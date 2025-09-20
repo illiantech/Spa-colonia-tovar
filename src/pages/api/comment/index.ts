@@ -1,4 +1,3 @@
-import type { APIRoute } from "astro";
 import {
   schemaComment,
   schemaDeleteMedia,
@@ -16,6 +15,7 @@ import {
 import { findSiteById } from "@/services/site";
 import type { CommentData, UUID } from "@/utils/types";
 import { res } from "@/utils/utilityFunctions";
+import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async ({ request, locals }) => {
   const userId = locals.userId;

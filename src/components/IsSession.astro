@@ -7,6 +7,7 @@ import { Users } from "../db/schemas";
 import GoogleIcon from "./resources/GoogleIcon.astro";
 import { getSession } from "auth-astro/server";
 import { ROOT } from "astro:env/client";
+import { AlternativeDataSession } from "@/utils/enums";
 
 const session = await getSession(Astro.request);
 
@@ -21,9 +22,9 @@ if (session?.user?.id) {
 
   if (!validatorUser[0])
     await db.insert(Users).values({
-      name: session?.user?.name ?? "Usuario Anónimo",
-      image: session?.user?.image ?? `${ROOT}/avatar-gray.jpg`,
-      email: session?.user?.email ?? "Email no proporcionado",
+      name: session?.user?.name ?? AlternativeDataSession.NAME,
+      image: session?.user?.image ?? AlternativeDataSession.IMAGE,
+      email: session?.user?.email ?? AlternativeDataSession.EMAIL,
       id: session?.user?.id
     });
 }

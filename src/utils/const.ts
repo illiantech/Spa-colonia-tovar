@@ -3,11 +3,7 @@ import type { StateMapLike } from "./types";
 
 export const MAX_INPUT = 200;
 
-export const ALLOWED_ORIGINS = [
-  ROOT,
-  "http://localhost:4321/",
-  "https://spa-colonia-tovar.vercel.app/"
-];
+export const ALLOWED_ORIGINS = [ROOT];
 
 export const ORIGIN_HEADERS = "origin";
 

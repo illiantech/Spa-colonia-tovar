@@ -8,20 +8,13 @@ import {
   ValuesAccessControl
 } from "../utils/enums";
 import { res } from "../utils/utilityFunctions";
-
-// tiende a fallar por cache
+import type { User } from "@auth/core/types";
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);
   if (
     !url.pathname.startsWith(RoutesAPI.API) ||
-    url.pathname.startsWith(RoutesAPI.AUTH) ||
-    (context.request.method === Methods.GET &&
-      !url.pathname.startsWith(RoutesAPI.LIKE) &&
-      !url.pathname.startsWith(RoutesAPI.COMMENT) &&
-      !url.pathname.startsWith(RoutesAPI.SITE) &&
-      !url.pathname.startsWith(RoutesAPI.CATEGORY) &&
-      !url.pathname.startsWith(RoutesAPI.SESSION))
+    url.pathname.startsWith(RoutesAPI.AUTH)
   )
     return next();
 
@@ -41,12 +34,17 @@ export const onRequest = defineMiddleware(async (context, next) => {
       ValuesAccessControl.ALLOW_HEADERS
     );
     context.request.headers.set(
-      KeysAccessControl.ALLOWED_CREDENTIALS,
-      ValuesAccessControl.ALLOWED_CREDENTIALS
+      KeysAccessControl.ALLOW_CREDENTIALS,
+      ValuesAccessControl.ALLOW_CREDENTIALS
     );
     context.request.headers.set(
       KeysAccessControl.VARY,
       ValuesAccessControl.VARY
+    );
+
+    context.request.headers.set(
+      KeysAccessControl.ALLOW_AGE,
+      ValuesAccessControl.ALLOW_AGE
     );
   } else
     return res(JSON.stringify("Forbidden, not allowed by CORS"), {
@@ -57,12 +55,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const session = await getSession(context.request);
 
   context.locals.userId = session?.user?.id;
+  context.locals.user = session?.user;
 
   if (
-    (url.pathname.startsWith(RoutesAPI.LIKE) ||
-      url.pathname.startsWith(RoutesAPI.COMMENT) ||
-      url.pathname.startsWith(RoutesAPI.SITE) ||
-      url.pathname.startsWith(RoutesAPI.CATEGORY)) &&
+    url.pathname.startsWith(RoutesAPI.API) &&
     context.request.method === Methods.GET
   )
     return next();

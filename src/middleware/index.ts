@@ -26,7 +26,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return next();
 
   const ORIGIN = context.request.headers.get(ORIGIN_HEADERS);
-  // console.log("ORIGIN", context.request.headers);
 
   if (!ORIGIN || ALLOWED_ORIGINS.includes(ORIGIN)) {
     context.request.headers.set(

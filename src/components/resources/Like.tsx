@@ -25,7 +25,7 @@ export const Like = ({ countLikes, handleLike, like }: Props) => {
       {countLikes !== undefined ? (
         <p
           title={handleLike && `${countLikes} Likes`}
-          class="text-shadow-lg select-none text-center text-sm lg:text-sm"
+          class="text-shadow-lg w-fit select-none text-center text-sm lg:text-sm"
         >
           {formatStat(countLikes)}
         </p>

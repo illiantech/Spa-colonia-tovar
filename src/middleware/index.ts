@@ -8,7 +8,6 @@ import {
   ValuesAccessControl
 } from "../utils/enums";
 import { res } from "../utils/utilityFunctions";
-import type { User } from "@auth/core/types";
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);

@@ -1,13 +1,5 @@
-import { WIDTH_DESKTOP } from "@/utils/const";
-import type { StyleProps } from "@/utils/types";
 import { formatStat } from "@/utils/utilityFunctions";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "preact/hooks";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import type { AllStats } from "../schemas/like";
 import { categorySitesStore } from "../store/categorySitesStore";
 import { Methods, RoutesAPI } from "../utils/enums";
@@ -62,47 +54,28 @@ export const WrapperViewStats = ({ SITES_ID }: Props) => {
     };
   }, []);
 
-  const variablePropertiesOfStats = useCallback(
-    ({
-      index,
-      initial
-    }: {
-      index: number;
-      initial: StyleProps;
-    }): StyleProps => {
-      if (refIsMobile.current && typeof initial === "object")
-        return refIsMobile.current < WIDTH_DESKTOP
-          ? { ...initial, top: `${112 * (index + 1) - 28}px` }
-          : { ...initial, top: `${192 * (index + 1) - 34}px` };
-    },
-    [refIsMobile.current] // Modifier state media query event
-  );
-
   return (
-    <div class="absolute top-0 w-full">
+    <div class="absolute right-0 top-0 h-full">
       {filterSitesId.map((site, i) => {
         return (
           <div
-            style={variablePropertiesOfStats({
-              index: i,
-              initial: {
-                opacity: 0,
-                animation: "fade-in 300ms ease forwards",
-                animationDelay: `${300 * i}ms`
-              }
-            })}
-            class="absolute top-0 w-full"
+            style={{
+              opacity: 0,
+              animation: "fade-in 300ms ease forwards",
+              animationDelay: `${300 * i}ms`
+            }}
+            class="relative h-28 lg:h-48"
             key={site.id}
           >
             <div
               title={`${formatStat(allLikes[site.id])} Likes`}
-              class="absolute -right-1 z-50 grid scale-75 grid-cols-2 grid-rows-1 items-center gap-0.5 lg:right-1 lg:scale-100"
+              class="absolute bottom-1 right-14 z-50 flex w-16 scale-75 items-center gap-1.5 lg:bottom-2 lg:right-24 lg:scale-100 lg:gap-2"
             >
               <Like countLikes={allLikes[site.id]} />
             </div>
             <div
               title={`${formatStat(amountComments[site.id])} Comentarios`}
-              class="absolute right-12 z-50 grid scale-75 grid-cols-2 grid-rows-1 items-center gap-0.5 lg:right-20 lg:scale-100"
+              class="absolute bottom-1 right-0 z-50 flex w-16 scale-75 items-center gap-1.5 lg:bottom-2 lg:right-4 lg:scale-100 lg:gap-2"
             >
               <StatComment amountComments={amountComments[site.id]} />
             </div>

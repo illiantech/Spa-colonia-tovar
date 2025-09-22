@@ -9,7 +9,7 @@ export const SiteLike = ({ id }: { id: string }) => {
 
   return (
     <div
-      class={`max-lg:animate-fade-in lg:bottom-22 lg:-right-22 absolute bottom-2 right-2 z-10 flex flex-col items-center gap-1 max-lg:transition-opacity lg:z-50 lg:w-16 lg:flex-row lg:gap-2 ${$isDisableItemSlider && "max-lg:opacity-0"}`}
+      class={`max-lg:animate-fade-in lg:bottom-22 lg:-right-19 absolute bottom-2 right-2 z-10 flex flex-col items-center gap-1 max-lg:transition-opacity lg:z-50 lg:grid lg:grid-cols-[1fr_30px] lg:grid-rows-1 lg:gap-0.5 ${$isDisableItemSlider && "max-lg:opacity-0"}`}
     >
       <Like countLikes={countLikes} handleLike={handleLike} like={like} />
     </div>

@@ -50,6 +50,6 @@ export const CommentSkeleton = () => {
 
 export const LittleSkeleton = () => {
   return (
-    <article class="h-5 w-4 animate-pulse rounded-md bg-neutral-700"></article>
+    <article class="h-5 w-full animate-pulse rounded-md bg-neutral-700"></article>
   );
 };

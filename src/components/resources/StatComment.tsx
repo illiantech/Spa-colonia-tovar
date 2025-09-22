@@ -11,7 +11,7 @@ export const StatComment = ({ amountComments }: Props) => {
     <>
       <CommentIcon />
       {amountComments !== undefined ? (
-        <p class="w-fit select-none text-center text-sm lg:text-sm">
+        <p class="select-none text-center text-sm lg:text-sm">
           {formatStat(amountComments)}
         </p>
       ) : (

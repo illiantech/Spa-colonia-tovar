@@ -69,13 +69,13 @@ export const WrapperViewStats = ({ SITES_ID }: Props) => {
           >
             <div
               title={`${formatStat(allLikes[site.id])} Likes`}
-              class="absolute bottom-1 right-14 z-50 flex w-16 scale-75 items-center gap-1.5 lg:bottom-2 lg:right-24 lg:scale-100 lg:gap-2"
+              class="right-13 absolute bottom-0 z-50 grid scale-75 grid-cols-[1fr_30px] grid-rows-1 items-center gap-0.5 lg:bottom-2 lg:right-20 lg:scale-100"
             >
               <Like countLikes={allLikes[site.id]} />
             </div>
             <div
               title={`${formatStat(amountComments[site.id])} Comentarios`}
-              class="absolute bottom-1 right-0 z-50 flex w-16 scale-75 items-center gap-1.5 lg:bottom-2 lg:right-4 lg:scale-100 lg:gap-2"
+              class="absolute bottom-0 right-0 z-50 grid scale-75 grid-cols-[1fr_30px] grid-rows-1 items-center gap-0.5 lg:bottom-2 lg:right-3 lg:scale-100"
             >
               <StatComment amountComments={amountComments[site.id]} />
             </div>

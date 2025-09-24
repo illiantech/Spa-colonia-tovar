@@ -34,7 +34,7 @@ export const useObserver: UseObserver = ({ state, dataset }, options) => {
     return new IntersectionObserver((entries) => {
       const [entry] = entries;
       if (entry.isIntersecting) {
-        console.log(`IsIntesecting: ${entry.isIntersecting}`);
+        // console.log(`IsIntesecting: ${entry.isIntersecting}`);
         setVisibleItem(true);
       }
     }, options);

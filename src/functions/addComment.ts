@@ -1,20 +1,22 @@
+import type { Dispatch, StateUpdater } from "preact/hooks";
 import { input } from "../store/featuresComment";
 import { sessionStore } from "../store/session";
-import { SCROLL_ADD_COMMENT, WIDTH_DESKTOP } from "../utils/const";
 import { CommentActions, Methods, RoutesAPI } from "../utils/enums";
 import type { QueryComment } from "../utils/types";
 
 import { textSpaceFormatted } from "../utils/utilityFunctions";
 
 interface Props extends QueryComment {
-  container: HTMLDivElement;
+  setIsAddItem: Dispatch<StateUpdater<boolean>>;
 }
 
-export const addComment = ({ id, actions, container, setIsLoading }: Props) => {
+export const addComment = ({
+  id,
+  actions,
+  setIsLoading,
+  setIsAddItem
+}: Props) => {
   setIsLoading(true);
-
-  const isMobile = window.innerWidth < WIDTH_DESKTOP;
-  const root = document.firstElementChild;
 
   const COMMENT_POST = {
     content: textSpaceFormatted(input.value.trim()),
@@ -48,9 +50,7 @@ export const addComment = ({ id, actions, container, setIsLoading }: Props) => {
         add: COMMENT_RENDER
       });
 
-      // Arreglar scroll smooth en mobile
-      if (isMobile && root) root.scrollTop = SCROLL_ADD_COMMENT;
-      else container.scrollTop = SCROLL_ADD_COMMENT;
+      setIsAddItem(true);
     })
     .catch((err) => {
       console.log(err);

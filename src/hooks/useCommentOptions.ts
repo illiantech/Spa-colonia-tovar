@@ -91,7 +91,7 @@ export const useCommentOption = ({ content, id, refInput }: Props) => {
 
   useEffect(() => {
     if (NOT_EDIT) {
-      input.value = "";
+      input.value = ""; // arreglar bug en lazy load
       refInput.current = "";
       return;
     }

@@ -1,10 +1,11 @@
-import { useContext, useRef, useState, type RefObject } from "preact/compat";
 import { ENTER, MAX_INPUT } from "@/utils/const";
+import { useContext, useRef, useState, type RefObject } from "preact/compat";
 
-import type { MutableRef } from "preact/hooks";
 import { addComment } from "@/functions/addComment";
 import { updateComment } from "@/functions/updateComment";
+import { useScrollTopAddItem } from "@/hooks/useScrollTopAddItem";
 import { edit, input, options } from "@/store/featuresComment";
+import type { MutableRef } from "preact/hooks";
 import { SendIcon } from "../resources/icons";
 import { CommentActionsContext, CommentsContext } from "./ProviderComment";
 
@@ -20,9 +21,12 @@ export const FormComment = ({ id, refContainerAside, refInput }: Props) => {
   const comments = useContext(CommentsContext);
   const refForm = useRef<HTMLFormElement>(null);
 
+  const { setIsAddItem } = useScrollTopAddItem({
+    container: refContainerAside.current
+  });
+
   const handleForm = (e?: SubmitEvent) => {
     e?.preventDefault();
-    const containerAside = refContainerAside.current;
 
     if (input.value.trim().length === 0) {
       input.value = "";
@@ -51,12 +55,12 @@ export const FormComment = ({ id, refContainerAside, refInput }: Props) => {
       return;
     }
 
-    if (!isLoading && comments && containerAside)
+    if (!isLoading && comments)
       addComment({
         id,
         actions,
-        container: containerAside,
-        setIsLoading
+        setIsLoading,
+        setIsAddItem
       });
   };
 

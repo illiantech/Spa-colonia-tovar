@@ -46,7 +46,7 @@ const { title, images } = site;
         </div>
 
         <ShareMedia id={id} />
-        <SiteLike id={id} client:load />
+        <SiteLike id={id} client:only="preact" />
       </div>
 
       <!-- <div

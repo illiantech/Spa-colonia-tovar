@@ -1,4 +1,6 @@
+import { VARIANT_ANIMATION_PRESENCE } from "@/utils/const";
 import { formatStat } from "@/utils/utilityFunctions";
+import { AnimatePresence, motion } from "motion/react";
 import { CommentIcon } from "./icons";
 import { LittleSkeleton } from "./skeletons";
 
@@ -8,15 +10,21 @@ interface Props {
 
 export const StatComment = ({ amountComments }: Props) => {
   return (
-    <>
+    <AnimatePresence>
       <CommentIcon />
       {amountComments !== undefined ? (
-        <p class="select-none text-center text-sm lg:text-sm">
+        <motion.p
+          variants={VARIANT_ANIMATION_PRESENCE}
+          animate="animate"
+          initial="initial"
+          exit="exit"
+          class="select-none text-center text-sm lg:text-sm"
+        >
           {formatStat(amountComments)}
-        </p>
+        </motion.p>
       ) : (
         <LittleSkeleton />
       )}
-    </>
+    </AnimatePresence>
   );
 };

@@ -27,6 +27,12 @@ export const WIDTH_DESKTOP = 1024;
 
 export const SCROLL_ADD_COMMENT = 0;
 
+export const VARIANT_ANIMATION_PRESENCE = {
+  initial: { opacity: 0, transition: { duration: 0.2 } },
+  animate: { opacity: 1, transition: { duration: 0.2 } },
+  exit: { opacity: 0, transition: { duration: 0.2 } }
+};
+
 export const VARIANT_ANIMATION_COMMMENT = {
   initial: {
     opacity: 0,

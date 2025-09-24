@@ -1,5 +1,7 @@
+import { VARIANT_ANIMATION_PRESENCE } from "@/utils/const";
 import type { StateLike } from "@/utils/types";
 import { formatStat } from "@/utils/utilityFunctions";
+import { AnimatePresence, motion } from "motion/react";
 import { LikeIcon } from "./icons";
 import { LittleSkeleton } from "./skeletons";
 
@@ -14,7 +16,7 @@ export const Like = ({ countLikes, handleLike, like }: Props) => {
 
   const notStateLike = handleLike === undefined ? "" : undefined;
   return (
-    <>
+    <AnimatePresence>
       <button
         onClick={handleLike}
         title={notStateLike ?? isStateLike}
@@ -23,15 +25,19 @@ export const Like = ({ countLikes, handleLike, like }: Props) => {
         <LikeIcon clase={like ? " like__active like " : "like"} />
       </button>
       {countLikes !== undefined ? (
-        <p
+        <motion.p
+          variants={VARIANT_ANIMATION_PRESENCE}
+          initial="initial"
+          animate="animate"
+          exit="exit"
           title={handleLike && `${countLikes} Likes`}
           class="text-shadow-lg select-none text-center text-sm lg:text-sm"
         >
           {formatStat(countLikes)}
-        </p>
+        </motion.p>
       ) : (
         <LittleSkeleton />
       )}
-    </>
+    </AnimatePresence>
   );
 };

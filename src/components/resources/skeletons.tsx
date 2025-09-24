@@ -1,3 +1,6 @@
+import { VARIANT_ANIMATION_PRESENCE } from "@/utils/const";
+import { motion } from "motion/react";
+
 export const CommentSkeleton = () => {
   return (
     <>
@@ -50,6 +53,12 @@ export const CommentSkeleton = () => {
 
 export const LittleSkeleton = () => {
   return (
-    <article class="h-5 w-full animate-pulse rounded-md bg-neutral-700"></article>
+    <motion.article
+      variants={VARIANT_ANIMATION_PRESENCE}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      class="h-5 w-full animate-pulse rounded-md bg-neutral-700"
+    ></motion.article>
   );
 };

@@ -86,7 +86,7 @@ const categorysData: CategoryData[] = CATEGORYS.map((item) => ({
           }
         </SitesByCategory>
 
-        <WrapperViewStats client:visible SITES_ID={SITES_ID} />
+        <WrapperViewStats client:only="preact" SITES_ID={SITES_ID} />
       </div>
     </section>
   </div>
